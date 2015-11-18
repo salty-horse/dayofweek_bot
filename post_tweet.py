@@ -54,7 +54,7 @@ def post_tweet():
                 if any(d in text_words for d in date_formats):
                     continue
 
-                if any(other_day in text_words for other_day in all_day_names if other_day != day_name):
+                if any(other_day in lower_text for other_day in all_day_names if other_day != day_name):
                     continue
 
                 if 'next ' + day_name in lower_text:
