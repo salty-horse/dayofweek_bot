@@ -74,7 +74,7 @@ def post_tweet():
                 if any(w in bad_words for w in text_words):
                     continue
 
-                if len(text.split()) > 15:
+                if len(text_words) > 10:
                     continue
                 good_tweets.append(result)
                 if len(good_tweets) >= 50:
