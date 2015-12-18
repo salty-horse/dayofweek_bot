@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import re
 import os
-import sys
 import random
 import datetime
 import tweepy
@@ -10,6 +10,8 @@ from secret import TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TW
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__)) + '/'
 bad_words = set(open(ROOT_PATH + 'badwords.txt').read().splitlines())
+RE_DATE = re.compile(r'\d\d?/\d\d?/\d\d')
+RE_TIME = re.compile(r'\d\d?:\d\d')
 
 def post_tweet():
     now = datetime.datetime.now()
@@ -63,12 +65,14 @@ def post_tweet():
                 if month_name in text_words or short_month_name in text_words:
                     continue
 
-
                 if 'http' in text:
                     continue
                 if 'RT' in text:
                     continue
                 if '@' in text:
+                    continue
+
+                if RE_DATE.search(text) or RE_TIME.search(text):
                     continue
 
                 if any(w in bad_words for w in text_words):
